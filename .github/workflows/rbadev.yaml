@@ -1,0 +1,64 @@
+name: gnucobol
+
+on: 
+  # Triggers the workflow on push or pull request events but only for the rbadev branch
+  push:
+    branches: 
+    - and_dev
+  pull_request:
+    branches:
+    - and_dev
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains several jobs
+  checkout_build_upload:
+    # The type of runner that the job will run on [meriland2]
+    #runs-on: [ gnucobol ]
+    runs-on: ${{ github.repository }}
+    container:
+     image: harbor.avalaunch.aval/docker-hub-proxy/rpmbuild/centos7
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Start of checkout action
+        run: echo "Checkout process has started at :" $(date '+%d/%m/%Y %T')
+
+      - name: Set CLONE directory variable
+        run:  echo "CLONEDIR=$(echo ${GITHUB_REPOSITORY})/${GITHUB_REF_NAME}/$(echo ${GITHUB_REPOSITORY##*/})/gnucobol" >> $GITHUB_ENV
+        
+      - name: Checkout action
+      # Checks-out your repository under $CLONEDIR directory, so your job can access it
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.CLONEDIR }}
+          
+      - name: Finish of checkout action
+        run: echo "Checkout process has finished at :" $(date '+%d/%m/%Y %T')
+        
+      - name: Building of rpm packages
+        run: |
+          echo "Building process has started at :" $(date '+%d/%m/%Y %T')
+          cd ${{ env.CLONEDIR }} || (echo "Could not enter ${{ env.CLONEDIR }} directory" && exit 1)
+          bash scripts/build_gnu.sh
+          echo "Building process has finished at :" $(date '+%d/%m/%Y %T')
+
+      - name: Start of upload artifacts action
+        run: echo "Upload artifacts process has started at :" $(date '+%d/%m/%Y %T')
+
+      - name: Upload rpm-files as artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: gnucobol_rpms
+          path: ${{ env.CLONEDIR }}/rpmbuild/RPMS/x86_64/*.rpm
+          retention-days: 25
+
+      - name: Finish of upload artifacts action
+        run: echo "Upload artifacts process has finished at :" $(date '+%d/%m/%Y %T')
+
+
+      - name: Finish of the workflow
+        run: echo "The whole process has finished at :" $(date '+%d/%m/%Y %T')
