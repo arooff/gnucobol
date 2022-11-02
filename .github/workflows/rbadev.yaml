@@ -57,7 +57,7 @@ jobs:
       #    retention-days: 25
 
       - name: Finish of upload artifacts action
-        run: echo "Upload artifacts process has finished at :" $(date '+%d/%m/%Y %T')
+        run: echo "Upload artifacts process has finished at : " $(date '+%d/%m/%Y %T')
 
 
       - name: Finish of the workflow
