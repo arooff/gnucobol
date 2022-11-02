@@ -20,7 +20,7 @@ jobs:
     runs-on: [ gnucobol ]
     #runs-on: ${{ github.repository }}
     container:
-     image: mycentos
+     image: mycentos:latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
