@@ -43,7 +43,7 @@ jobs:
         run: |
           echo "Building process has started at :" $(date '+%d/%m/%Y %T')
           cd ${{ env.CLONEDIR }} || (echo "Could not enter ${{ env.CLONEDIR }} directory" && exit 1)
-          #bash scripts/build_gnu.sh
+          bash scripts/build_gnu.sh
           echo "Building process has finished at :" $(date '+%d/%m/%Y %T')
 
       - name: Start of upload artifacts action
