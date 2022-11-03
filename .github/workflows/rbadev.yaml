@@ -49,12 +49,12 @@ jobs:
       - name: Start of upload artifacts action
         run: echo "Upload artifacts process has started at :" $(date '+%d/%m/%Y %T')
 
-      #- name: Upload rpm-files as artifacts
-      #  uses: actions/upload-artifact@v2
-      #  with:
-      #    name: gnucobol_rpms
-      #    path: ${{ env.CLONEDIR }}/rpmbuild/RPMS/x86_64/*.rpm
-      #    retention-days: 25
+      - name: Upload rpm-files as artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: gnucobol_rpms
+          path: ${{ env.CLONEDIR }}/rpmbuild/RPMS/x86_64/*.rpm
+          retention-days: 25
 
       - name: Finish of upload artifacts action
         run: echo "Upload artifacts process has finished at :" $(date '+%d/%m/%Y %T')
