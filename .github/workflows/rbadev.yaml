@@ -4,10 +4,10 @@ on:
   # Triggers the workflow on push or pull request events but only for the rbadev branch
   push:
     branches: 
-    - andy
+    - and_w
   pull_request:
     branches:
-    - andy
+    - and_w
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
     runs-on: [ gnucobol ]
     #runs-on: ${{ github.repository }}
     container:
-     image: arooff/mycentos:latest
+     image: ${{ secrets.DOCKER_IMAGE }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
