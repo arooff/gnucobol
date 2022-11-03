@@ -61,4 +61,4 @@ jobs:
 
 
       - name: Finish of the workflow
-        run: echo "The whole process has finished at :" $(date '+%d/%m/%Y %T')
+        run: echo "URA. The whole process has finished at :" $(date '+%d/%m/%Y %T')
